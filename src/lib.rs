@@ -6,6 +6,7 @@
 /// - `authors`: The authors of the package.
 /// - `description`: The description of the package.
 /// - `dependencies`: A list of dependencies for the package.
+#[derive(PartialEq, PartialOrd, Debug)]
 pub struct PackageInfos {
     pub name: &'static str,
     pub version: &'static str,
@@ -24,8 +25,8 @@ macro_rules! pkg_infos {
             ///
             /// # Arguments
             ///
-            /// - `$( $x:expr ),*`: A comma-separated list of expressions that each return a `PackageInfos` structure,
-            /// representing the dependencies of the package.
+            ///  * `$( $x:expr ),*`: A comma-separated list of expressions that each return a `PackageInfos` structure,
+            ///    representing the dependencies of the package.
             ///
             /// # Returns
             ///
@@ -50,3 +51,5 @@ macro_rules! pkg_infos {
             }
     };
 }
+
+pkg_infos!();
