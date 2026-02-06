@@ -7,3 +7,4 @@ edition = "2021"
 
 
 [dev-dependencies]
+rusttests = { git = "https://github.com/nicls67/rusttests" }
