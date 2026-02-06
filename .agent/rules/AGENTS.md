@@ -25,6 +25,7 @@ The repo contains the `package_infos` library which helps gathering and displayi
 - If you need to touch multiple crates, explain why in the final response.
 - Always ask for user review after generating a action plan. Never update code by yourself.
 - Update and run tests after each code update
+- Update package version after each update, following semver rules
 
 ## Naming rules
 1. Follow standard Rust naming conventions (snake_case for variables/functions, CamelCase for types/traits, SCREAMING_SNAKE_CASE for constants).
