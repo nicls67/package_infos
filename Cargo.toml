@@ -1,10 +1,10 @@
 [package]
 name = "package_infos"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [dependencies]
 
 
 [dev-dependencies]
-rusttests = { git = "http://serveur-dev.home/rust-libs/rusttests.git", tag = "1.1.0" }
+rusttests = { git = "https://github.com/nicls67/rusttests" }
