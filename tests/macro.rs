@@ -1,8 +1,7 @@
 use package_infos::PackageInfos;
-use rusttests::{check_value, CheckType};
 
 #[test]
-fn test_macro() -> Result<(), String> {
+fn test_macro() {
     let infos = package_infos::get_package_infos();
 
     let expected = PackageInfos {
@@ -13,5 +12,5 @@ fn test_macro() -> Result<(), String> {
         dependencies: Vec::new(),
     };
 
-    check_value((1, 1), &infos, &expected, CheckType::Equal)
+    assert_eq!(infos, expected);
 }

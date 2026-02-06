@@ -7,4 +7,3 @@ edition = "2021"
 
 
 [dev-dependencies]
-rusttests = { git = "http://serveur-dev.home/rust-libs/rusttests.git", tag = "1.1.0" }
