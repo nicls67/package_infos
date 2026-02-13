@@ -25,10 +25,11 @@ The repo contains the `package_infos` library which helps gathering and displayi
 - If you need to touch multiple crates, explain why in the final response.
 - Always ask for user review after generating a action plan. Never update code by yourself.
 - Update and run tests after each code update
-- Update package version after each update, by comparison with the last tag, following SEMVER rules
+- Update the package version after each change following SEMVER rules by comparison with the last tag, version shall not be necessarily updated after each commit.
 
 ## Naming rules
 1. Follow standard Rust naming conventions (snake_case for variables/functions, CamelCase for types/traits, SCREAMING_SNAKE_CASE for constants).
+2. Use the following rule to name variables and constants : constants shall start with 'K_', global variables shall start with 'G_', local variables shall start with 'l', functions and methods parameters shall start with 'p_'
 
 ## Git rules
 This rule applies each time a git branch needs to be created or renamed
@@ -58,12 +59,12 @@ Before any code update (except imports cleanup and documentation update), propos
 
 ### 1) Git state and review scope
 1. Run `git status -sb` and summarize what is modified.
-2. The review is done by default on the uncomitted changes. if the user asks to review the branch, work on all the changes made in the current branch.
+2. The review is done by default on the uncomitted changes. If the user asks to review the branch, work on all the changes made in the current branch. If the user asks to review all the code base, work on all the files in the current repository.
 
 ### 2) Human-style code review
 Read the diff and focus primarily on:
   - Check for potential bugs or performance issues.
-  - Ensure code is properly documented and documentation is up-to-date.
+  - Ensure code is properly documented and documentation is up-to-date (including README.md).
   - Check error handling and error messages.
   - Ensure code is well-structured and follows best practices.
   - Verify that the code is easy to understand and maintain.
@@ -84,7 +85,10 @@ Read the diff and focus primarily on:
 ### 5) Automated checks corrections
 - If any issue has been found on a modified file by an automated check, you are allowed to correct it.
 
-### 6) Required output format
+### 6) Run tests
+- Run `cargo test`
+
+### 7) Required output format
 Produce a report with **exactly** the following sections:
 
 #### Summary

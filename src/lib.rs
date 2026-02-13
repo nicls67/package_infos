@@ -12,6 +12,18 @@ use std::fmt;
 /// - `authors`: The authors of the package.
 /// - `description`: The description of the package.
 /// - `dependencies`: A list of dependencies for the package.
+///
+/// # Parameters
+/// None.
+///
+/// # Returns
+/// None.
+///
+/// # Error Handling
+/// None.
+///
+/// # Panicking
+/// None.
 #[derive(PartialEq, PartialOrd, Debug)]
 pub struct PackageInfos {
     pub name: &'static str,
@@ -26,7 +38,7 @@ impl fmt::Display for PackageInfos {
     /// Formats the package information for display.
     ///
     /// # Parameters
-    /// - `f`: The formatter to write to.
+    /// - `p_f`: The formatter to write to.
     ///
     /// # Returns
     /// - `fmt::Result`: Result of the formatting operation.
@@ -36,24 +48,26 @@ impl fmt::Display for PackageInfos {
     ///
     /// # Panicking
     /// This function does not panic.
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut text = format!(
+    fn fmt(&self, p_f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            p_f,
             "{} crate version {}\n   {}\n   Authors : {}",
             self.name, self.version, self.description, self.authors
-        );
+        )?;
         if !self.dependencies.is_empty() {
-            text = format!("{}\n\n   Using librairies :", text);
+            write!(p_f, "\n\n   Using librairies :")?;
         }
-        for dependency in self.dependencies.iter() {
-            let binding = dependency.to_string();
-            let mut split = binding.split('\n').collect::<Vec<&str>>();
-            let first = split.remove(0);
-            text = format!("{}\n      * {}", text, first);
-            for line in split.iter() {
-                text = format!("{}\n        {}", text, line);
+        for l_dependency in self.dependencies.iter() {
+            let l_binding = l_dependency.to_string();
+            let mut l_split = l_binding.lines();
+            if let Some(l_first) = l_split.next() {
+                write!(p_f, "\n      * {}", l_first)?;
+            }
+            for l_line in l_split {
+                write!(p_f, "\n        {}", l_line)?;
             }
         }
-        writeln!(f, "{}", text)
+        writeln!(p_f)
     }
 }
 
@@ -65,7 +79,7 @@ impl fmt::Display for PackageInfos {
 ///
 /// # Parameters
 /// - `args`: A comma-separated list of expressions that each return a `PackageInfos` structure,
-///  representing the dependencies of the package.
+///   representing the dependencies of the package.
 ///
 /// # Returns
 /// - A `PackageInfos` structure containing metadata about the package and its dependencies.
@@ -81,22 +95,22 @@ macro_rules! pkg_infos {
     ( $( $x:ident ),* ) => {
 
             pub fn get_package_infos() -> PackageInfos {
-                let name = env!("CARGO_PKG_NAME");
-                let version = env!("CARGO_PKG_VERSION");
-                let authors = env!("CARGO_PKG_AUTHORS");
-                let description = env!("CARGO_PKG_DESCRIPTION");
-                let dependencies = vec![
+                let l_name = env!("CARGO_PKG_NAME");
+                let l_version = env!("CARGO_PKG_VERSION");
+                let l_authors = env!("CARGO_PKG_AUTHORS");
+                let l_description = env!("CARGO_PKG_DESCRIPTION");
+                let l_dependencies = vec![
                 $(
                     $x::get_package_infos(),
                 )*
                 ];
 
                 PackageInfos {
-                    name,
-                    version,
-                    authors,
-                    description,
-                    dependencies
+                    name: l_name,
+                    version: l_version,
+                    authors: l_authors,
+                    description: l_description,
+                    dependencies: l_dependencies
                 }
             }
     };
